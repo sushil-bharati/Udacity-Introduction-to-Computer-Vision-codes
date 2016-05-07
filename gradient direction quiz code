@@ -1,0 +1,36 @@
+% Gradient Direction
+function result = select_gdir(gmag, gdir, mag_min, angle_low, angle_high)
+    % TODO Find and return pixels that fall within the desired mag, angle range
+    k = size(gdir);
+    for i = 1:k(1)
+       for j = 1:k(2)
+          if (gdir(i,j)>=angle_low && gdir(i,j)<=angle_high && gmag(i,j)>=mag_min)
+               result(i,j) = (gdir(i,j) + 180.0) / 360.0;
+           else
+               result(i,j)=0;
+           end
+        end
+    end
+    
+    % I have designed the above code for real beginners to understand how the work flow is. For experts it is a one liner
+    % result = gmag>=mag_min && gdir>=angle_low && gdir<=angle_high;
+       
+endfunction
+
+pkg load image;
+
+%% Load and convert image to double type, range [0, 1] for convenience
+img = double(imread('octagon.png')) / 255.; 
+imshow(img); % assumes [0, 1] range for double images
+
+%% Compute x, y gradients
+[gx gy] = imgradientxy(img, 'sobel'); % Note: gx, gy are not normalized
+
+%% Obtain gradient magnitude and direction
+[gmag gdir] = imgradient(gx, gy);
+imshow(gmag / (4 * sqrt(2))); % mag = sqrt(gx^2 + gy^2), so [0, (4 * sqrt(2))]
+imshow((gdir + 180.0) / 360.0); % angle of gdir ranges in degrees [-180, 180]
+
+%% Find pixels with desired gradient direction
+my_grad = select_gdir(gmag, gdir, 1, 30, 60); % 45 +/- 15
+imshow(my_grad);  % NOTE: enable after you've implemented select_gdir
