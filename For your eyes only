@@ -1,0 +1,30 @@
+% For Your Eyes Only
+pkg load image;
+
+frizzy = imread('frizzy.png');
+froomer = imread('froomer.png');
+imshow(frizzy);
+imshow(froomer);
+
+% TODO: Find edges in frizzy and froomer images
+frizzy_edge = (edge(rgb2gray(frizzy),'canny'));
+froomer_edge = (edge(rgb2gray(froomer), 'canny'));
+
+% TODO: Display common edge pixels
+
+% Beginners look here
+k = size(frizzy_edge)
+ for i = 1 : k(1)
+     for j = 1 : k(2)
+         if (frizzy_edge(i,j) == froomer_edge(i,j)) 
+             commonEdge(i,j) = frizzy_edge(i,j);
+        else
+             commonEdge(i,j)=0;
+        end
+     end
+ end
+ 
+ % Experts look here
+ % commonEdge = (frizzy_edge & froomer_edge); %binary and
+ 
+ imshow(commonEdge);
