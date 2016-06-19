@@ -1,4 +1,5 @@
-%Author's note: This seems to fail some of their datasets. I am still thinking why. Feel free to let me know by pulling issues - Thanks
+%Author's note: This seems to fail some of their datasets. I think it is due to they have not accomodated answer sets 
+% for cross correlation but only SSD. Feel free to let me know if you think otherwise - Thanks
 % Find best match
 function best_x = find_best_match(patch, strip)
     % TODO: Find patch in strip and return column index (x value) of topleft corner
